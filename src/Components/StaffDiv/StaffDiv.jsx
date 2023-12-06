@@ -17,42 +17,47 @@ const StaffDiv = () => {
       });
   }, []);
 
-  const handleStaffDelete = async (staffId) => {
+  const handleStaffSelect = (staffId) => {
+    setSelectedStaffId(staffId);
+  };
+
+  const handleStaffDelete = async () => {
+    if (!selectedStaffId) {
+      console.error('No staff selected for deletion.');
+      return;
+    }
+
     try {
-      await axios.delete(`/staffs/${staffId}`);
-      setStaffs((staffs) => staffs.filter((staff) => staff.Staff_id !== staffId));
+      await axios.delete(`/staffs/${selectedStaffId}`);
+      setStaffs((staffs) => staffs.filter((staff) => staff.Staff_id !== selectedStaffId));
       setSelectedStaffId(null);
     } catch (error) {
       console.error('Error deleting staff:', error);
     }
   };
 
-  const ConfirmationModal = () => (
-    selectedStaffId && (
-      <div className="confirm-modal">
-        <p>Are you sure you want to delete Staff {selectedStaffId}?</p>
-        <button onClick={() => handleStaffDelete(selectedStaffId)}>
-          Yes, Delete
-        </button>
-        <button onClick={() => setSelectedStaffId(null)}>Cancel</button>
-      </div>
-    )
-  );
+  
 
   return (
     <div className="staffdiv">
       {staffs.map((staff) => (
-        <div key={staff.Staff_id} className="staffdiv-child">
+        <div
+          key={staff.Staff_id}
+          className="staffdiv-child"
+          onClick={() => handleStaffSelect(staff.Staff_id)}
+          style={{ backgroundColor: selectedStaffId === staff.Staff_id ? '#eee' : 'white' }}
+        >
           <p>{staff.Staff_id}</p>
           <p>{staff.Name}</p>
           <p>{staff.Type}</p>
           <p>Rs. {staff.Salary}</p>
-          <button onClick={() => setSelectedStaffId(staff.Staff_id)}>
-            Delete
-          </button>
         </div>
       ))}
-      <ConfirmationModal />
+      <div className="staffdiv-bottom">
+        <button onClick={handleStaffDelete} disabled={!selectedStaffId}>
+          Delete Selected Staff
+        </button>
+      </div>
     </div>
   );
 };

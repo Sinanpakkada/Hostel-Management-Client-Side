@@ -15,7 +15,8 @@ const Staffs = () => {
           <h3>Salary</h3>
         </div>
         <StaffDiv />
-        <div className='insert-staff-button'><Link to={'/stafform'}><InsertButton content='staff'/></Link></div> 
+        <div className='insert-staff-button'><Link to={'/stafform'}><InsertButton content='staff'/></Link></div>
+         
       </div>
   );
 };

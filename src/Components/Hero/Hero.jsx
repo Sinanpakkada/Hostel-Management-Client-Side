@@ -6,10 +6,9 @@ const Hero = () => {
   return (
     <div className='hero'>
        <img src={front_image} alt="" />
-        <p>"Hola Admins,<br />
-             Your dedication shapes the experiences
-           <br /> and memories that resonate within ,<br />these walls."
-       </p>
+       <p>Admin Portal</p>
+             
+       
     </div>
   )
 }
